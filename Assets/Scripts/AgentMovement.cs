@@ -17,9 +17,15 @@ public class AgentMovement : MonoBehaviour
 
     protected float desiredRotationAngler = 0;
 
+    public bool IsGround()
+    {
+        return characterController.isGrounded;
+    }
+
     int inputVerticalDirection = 0;
 
     bool isJumping = false;
+    bool finishedJumping = true;
 
     public void HandleMovement(Vector2 input) 
     {
@@ -82,8 +88,10 @@ public class AgentMovement : MonoBehaviour
         if (isJumping)
         {
             isJumping = false;
+            finishedJumping = false;
             moveDirection.y = jumpSpeed;
             agentAnimations.SetMovementFloat(0);
+            agentAnimations.TriggerJumpAnimation();
         }
         characterController.Move(moveDirection * Time.deltaTime);
     }
@@ -94,5 +102,20 @@ public class AgentMovement : MonoBehaviour
         {
             transform.Rotate(Vector3.up * desiredRotationAngler * rotationSpeed * Time.deltaTime);
         }
+    }
+
+    public void StopMovementInmediatelly()
+    {
+        moveDirection = Vector3.zero;
+    }
+
+    public bool HasFinishedJumping()
+    {
+        return finishedJumping;
+    }
+
+    public void SetFinishedJumping()
+    {
+        finishedJumping = true;
     }
 }

@@ -4,28 +4,37 @@ using UnityEngine;
 
 public class JumpState : BaseState
 {
+    bool landingTrigger = false;
+    float delay = 0;
+
     public override void EnterState(AgentController controller)
     {
         base.EnterState(controller);
-    }
-
-    public override void HandleMovement(Vector2 input)
-    {
-        base.HandleMovement(input);
-    }
-
-    public override void HandleCameraDirection(Vector3 input)
-    {
-        base.HandleCameraDirection(input);
-    }
-
-    public override void HandleJumpInput()
-    {
-        base.HandleJumpInput();
+        delay = 0.2f;
+        landingTrigger = false;
+        controllerReference.movement.HandleJump();
     }
 
     public override void Update()
     {
         base.Update();
+        if (delay > 0)
+        {
+            delay -= Time.deltaTime;
+            return;
+        }
+        if (controllerReference.movement.IsGround())
+        {
+            if (!landingTrigger)
+            {
+                landingTrigger = true;
+                controllerReference.agentAnimations.TriggerLandingAnimation();
+            }
+            if (controllerReference.movement.HasFinishedJumping())
+            {
+                controllerReference.TransitionToState(controllerReference.movementState);
+            }
+        }
+        
     }
 }
