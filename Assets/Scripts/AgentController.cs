@@ -8,18 +8,41 @@ public class AgentController : MonoBehaviour
     public AgentMovement movement;
     public PlayerInput input;
 
-    private void OnEnable() {
+    BaseState currentState;
+    public readonly BaseState movementState = new MovemenState();
+    public readonly BaseState jumpState = new JumpState();
+
+    private void OnEnable()
+    {
         movement = GetComponent<AgentMovement>();
         input = GetComponent<PlayerInput>();
-        input.OnJump += movement.HandleJump;
+        currentState = movementState;
+        currentState.EnterState(this);
+        AssignMovementInputListeners();
+    }
+
+    private void AssignMovementInputListeners()
+    {
+        input.OnJump += HandleJump;
     }
 
     private void Update() {
-        movement.HandleMovement(input.MovementInputVector);
-        movement.HandleMovementDirection(input.MovementDirectionVector);
+        currentState.Update();
     }
 
     private void OnDisable() {
-        input.OnJump -= movement.HandleJump;
+        input.OnJump -= HandleJump;
+        //input.OnJump -= currentState.HandleJumpInput;
+    }
+
+    private void HandleJump()
+    {
+        currentState.HandleJumpInput();
+    }
+
+    public void TransitionToState(BaseState state)
+    {
+        currentState = state;
+        currentState.EnterState(this);
     }
 }
