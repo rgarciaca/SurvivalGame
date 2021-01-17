@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25176276d2c49954098bea6fb1c868ce, type: 3}
+  m_Name: Apple
+  m_EditorClassIdentifier: 
+  ID: 8c801dfe0159443d83d0de746c5df9f7
+  itemName: Apple
+  imageSprite: {fileID: 21300000, guid: 2d71cb52dc9305b45ae1b5fb660c23dd, type: 3}
+  model: {fileID: -927199367670048503, guid: dfcb196796269664d95e389fb7e98ff4, type: 3}
+  IsStackable: 1
+  stackLimit: 100
+  itemType: 1
+  staminaBonus: 0
+  hungerBonus: 5
+  energyBonus: 0

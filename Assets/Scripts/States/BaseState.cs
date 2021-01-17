@@ -17,5 +17,9 @@ public abstract class BaseState
 
     public virtual void HandleJumpInput() { }
 
+    public virtual void HandleInventoryInput() { }
+
+    public virtual void HandleHotbarInput(int hotbarkey) { }
+
     public virtual void Update() { }
 }
